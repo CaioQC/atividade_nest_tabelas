@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
 import { CidadeService } from './cidade.service';
 import { CidadeController } from './cidade.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Cidade } from './entities/cidade.entity';
+import { Uf } from 'src/uf/entities/uf.entity';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([Cidade, Uf])],
   controllers: [CidadeController],
   providers: [CidadeService],
 })

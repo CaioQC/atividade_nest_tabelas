@@ -1,0 +1,24 @@
+### list cidade
+GET http://localhost:3000/cidade
+
+### get cidade
+GET http://localhost:3000/cidade/1
+
+### create cidade
+POST http://localhost:3000/cidade
+Content-Type: application/json
+
+{
+    "nome":"Goana",
+    "ufId":2
+}
+
+### update cidade
+PATCH  http://localhost:3000/cidade/1
+Content-Type: application/json
+
+{
+    "nome":"Goiania"
+}
+### delete cidade
+DELETE http://localhost:3000/cidade/1

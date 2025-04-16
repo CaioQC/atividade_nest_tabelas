@@ -1,12 +1,18 @@
-import { isEmail, isString } from "class-validator"
+import { IsDateString, IsEmail, IsNumber, IsString } from "class-validator";
 
 export class CreateEstudanteDto {
-    @isString()
-    name: string
+    @IsString()
+    nome: string;
 
-    @isEmail()
-    email: string
-    
-    @isString()
-    matricula: string
+    @IsString()
+    matricula: string;
+
+    @IsEmail()
+    email: string;
+
+    @IsDateString()
+    dataNascimento: string;
+
+    @IsNumber()
+    cidadeId: number;
 }

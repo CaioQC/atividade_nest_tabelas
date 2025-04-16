@@ -1,0 +1,24 @@
+### list ufs
+GET http://localhost:3000/uf
+
+### get uf
+GET http://localhost:3000/uf/1
+
+### create uf
+POST http://localhost:3000/uf
+Content-Type: application/json
+
+{
+    "nome": "Goania",
+    "sigla": "GO"
+}
+
+### update uf
+PATCH  http://localhost:3000/uf/1
+{
+    "nome": "Curitiba",
+    "sigla": "Parana"
+}
+
+### delete uf
+DELETE http://localhost:3000/uf/1
