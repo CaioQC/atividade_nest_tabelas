@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UpdateClienteDto } from './dto/update-cliente.dto';
 import { Cliente } from './entities/cliente.entity';
 
 @Injectable()
@@ -27,10 +28,9 @@ export class ClienteService {
     return this.clienteRepository.save(data);
   }
 
-  update(id: number, data: UpdateClienteDto): Promise<Cliente> {
+  update(id: number, data: Partial<Cliente>): Promise<Cliente> {
     return this.clienteRepository.save({ id, ...data });
-  }
-  
+  }  
 
   remove(id: number) {
     return this.clienteRepository.delete(id);

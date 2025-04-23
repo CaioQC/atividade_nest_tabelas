@@ -8,9 +8,10 @@ GET http://localhost:3000/clientes/1
 POST http://localhost:3000/clientes
 Content-Type: application/json
 
-{
-    "nome":"Goana",
-    "ufId":2
+{ 
+    "nome": "João da Silva",
+    "email": "joao@email.com",
+    "telefone": "11999999999"
 }
 
 ### update cidade
