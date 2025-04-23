@@ -27,9 +27,10 @@ export class ClienteService {
     return this.clienteRepository.save(data);
   }
 
-  update(id: number, data: Partial<Cliente>) {
-    return this.clienteRepository.update(id, data);
+  update(id: number, data: UpdateClienteDto): Promise<Cliente> {
+    return this.clienteRepository.save({ id, ...data });
   }
+  
 
   remove(id: number) {
     return this.clienteRepository.delete(id);

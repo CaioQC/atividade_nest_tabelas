@@ -12,8 +12,8 @@ export class EnderecoController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Promise<Endereco> {
-    return this.service.findOne(id);
+  async findOne(@Param('id') id: number): Promise<Endereco | null> {
+  return this.service.findOne(id); // Agora a função pode retornar `null`
   }
 
   @Post()

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { HistoricoVenda } from './entities/historico-venda.entity';
 import { Repository } from 'typeorm';
+import { UpdateHistoricoVendaDto } from './dto/update-historico-venda.dto';
 
 @Injectable()
 export class HistoricoVendaService {
@@ -25,9 +26,9 @@ export class HistoricoVendaService {
     return this.repo.save(data);
   }
 
-  update(id: number, data: Partial<HistoricoVenda>) {
-    return this.repo.update(id, data);
-  }
+  update(id: number, data: UpdateHistoricoVendaDto): Promise<HistoricoVenda> {
+    return this.repo.save({ id, ...data });
+  }  
 
   remove(id: number) {
     return this.repo.delete(id);

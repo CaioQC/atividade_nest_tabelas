@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { HistoricoVenda } from 'src/historico-compra/entities/historico-compra.entity';
+import { HistoricoVenda } from 'src/historico-venda/entities/historico-venda.entity';
 
 @Entity()
 export class Vendedor {

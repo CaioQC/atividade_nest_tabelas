@@ -12,8 +12,8 @@ export class MetodoPagamentoController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Promise<MetodoPagamento> {
-    return this.service.findOne(id);
+  async findOne(@Param('id') id: number): Promise<MetodoPagamento | null> {
+  return this.service.findOne(id); // Agora a função pode retornar `null`
   }
 
   @Post()

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Carrinho } from './entities/carrinho.entity';
 import { Repository } from 'typeorm';
+import { UpdateCarrinhoDto } from './dto/update-carrinho.dto';
 
 @Injectable()
 export class CarrinhoService {
@@ -22,9 +23,9 @@ export class CarrinhoService {
     return this.repo.save(data);
   }
 
-  update(id: number, data: Partial<Carrinho>) {
-    return this.repo.update(id, data);
-  }
+  update(id: number, data: UpdateCarrinhoDto): Promise<Carrinho> {
+    return this.repo.save({ id, ...data });
+  }  
 
   remove(id: number) {
     return this.repo.delete(id);

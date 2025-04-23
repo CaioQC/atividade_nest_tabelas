@@ -12,8 +12,8 @@ export class ClienteController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.clienteService.findOne(id);
+  async findOne(@Param('id') id: number): Promise<Cliente | null> {
+  return this.clienteService.findOne(id); // Agora a função pode retornar `null`
   }
 
   @Post()

@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { PedidoService } from './pedido.service';
 import { Pedido } from './entities/pedido.entity';
+import { UpdatePedidoDto } from './dto/update-pedido.dto';
 
 @Controller('pedidos')
 export class PedidoController {
@@ -12,8 +13,8 @@ export class PedidoController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Promise<Pedido> {
-    return this.pedidoService.findOne(id);
+  async findOne(@Param('id') id: number): Promise<Pedido | null> {
+  return this.pedidoService.findOne(id); // Agora a função pode retornar `null`
   }
 
   @Post()
@@ -22,7 +23,7 @@ export class PedidoController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() data: Partial<Pedido>) {
+  update(@Param('id') id: number, @Body() data: UpdatePedidoDto) {
     return this.pedidoService.update(id, data);
   }
 

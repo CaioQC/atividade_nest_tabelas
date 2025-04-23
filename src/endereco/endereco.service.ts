@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Endereco } from './entities/endereco.entity';
 import { Repository } from 'typeorm';
+import { UpdateEnderecoDto } from './dto/update-endereco.dto';
 
 @Injectable()
 export class EnderecoService {
@@ -22,9 +23,9 @@ export class EnderecoService {
     return this.repo.save(data);
   }
 
-  update(id: number, data: Partial<Endereco>) {
-    return this.repo.update(id, data);
-  }
+  update(id: number, data: UpdateEnderecoDto): Promise<Endereco> {
+    return this.repo.save({ id, ...data });
+  }  
 
   remove(id: number) {
     return this.repo.delete(id);

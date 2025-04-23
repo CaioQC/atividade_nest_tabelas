@@ -12,8 +12,8 @@ export class CarrinhoController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Promise<Carrinho> {
-    return this.service.findOne(id);
+  async findOne(@Param('id') id: number): Promise<Carrinho | null> {
+  return this.service.findOne(id); // Agora a função pode retornar `null`
   }
 
   @Post()

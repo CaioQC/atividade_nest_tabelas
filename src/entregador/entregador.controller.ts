@@ -12,8 +12,8 @@ export class EntregadorController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.entregadorService.findOne(id);
+  async findOne(@Param('id') id: number): Promise<Entregador | null> {
+  return this.entregadorService.findOne(id); // Agora a função pode retornar `null`
   }
 
   @Post()

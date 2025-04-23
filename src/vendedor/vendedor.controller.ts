@@ -12,8 +12,8 @@ export class VendedorController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.vendedorService.findOne(id);
+  async findOne(@Param('id') id: number): Promise<Vendedor | null> {
+  return this.vendedorService.findOne(id); // Agora a função pode retornar `null`
   }
 
   @Post()
