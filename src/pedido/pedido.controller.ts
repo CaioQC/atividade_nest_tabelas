@@ -1,30 +1,31 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body, Patch } from '@nestjs/common';
 import { PedidoService } from './pedido.service';
 import { Pedido } from './entities/pedido.entity';
 import { UpdatePedidoDto } from './dto/update-pedido.dto';
+import { CreatePedidoDto } from './dto/create-pedido.dto';
 
 @Controller('pedidos')
 export class PedidoController {
   constructor(private readonly pedidoService: PedidoService) {}
 
   @Get()
-  findAll(): Promise<Pedido[]> {
+  findAll(){
     return this.pedidoService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Pedido | null> {
+  async findOne(@Param('id') id: number){
   return this.pedidoService.findOne(id); // Agora a função pode retornar `null`
   }
 
   @Post()
-  create(@Body() data: Partial<Pedido>): Promise<Pedido> {
-    return this.pedidoService.create(data);
+  create(@Body() dto: CreatePedidoDto){
+    return this.pedidoService.create(dto);
   }
 
-  @Put(':id')
-  update(@Param('id') id: number, @Body() data: UpdatePedidoDto) {
-    return this.pedidoService.update(id, data);
+  @Patch(':id')
+  update(@Param('id') id: number, @Body() dto: UpdatePedidoDto) {
+    return this.pedidoService.update(id, dto);
   }
 
   @Delete(':id')

@@ -1,0 +1,25 @@
+### list lojas
+GET http://localhost:3000/lojas
+
+### get lojas
+GET http://localhost:3000/lojas/2
+
+### create lojas
+POST http://localhost:3000/lojas
+Content-Type: application/json
+
+{ 
+    "nome": "Banca do zé",
+    "cnpj": "00.000.000/0000-00"
+}
+
+### update lojas
+PATCH  http://localhost:3000/lojas/1
+Content-Type: application/json
+
+{
+    "nome": "Banca do Antônio"
+}
+
+### delete lojas
+DELETE http://localhost:3000/lojas/3

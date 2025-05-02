@@ -3,31 +3,38 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MetodoPagamento } from './entities/metodo-pagamento.entity';
 import { Repository } from 'typeorm';
 import { UpdateMetodoPagamentoDto } from './dto/update-metodo-pagamento.dto';
+import { CreateMetodoPagamentoDto } from './dto/create-metodo-pagamento.dto';
 
 @Injectable()
 export class MetodoPagamentoService {
   constructor(
     @InjectRepository(MetodoPagamento)
-    private repo: Repository<MetodoPagamento>,
+    private metodoPagamentoRepository: Repository<MetodoPagamento>,
   ) {}
 
-  findAll(): Promise<MetodoPagamento[]> {
-    return this.repo.find({ relations: ['cliente'] });
+  findAll(){
+    return this.metodoPagamentoRepository.find();
   }
 
-  findOne(id: number): Promise<MetodoPagamento | null> {
-    return this.repo.findOne({ where: { id }, relations: ['cliente'] });
+  findOne(idMetodoPagamento: number){
+    return this.metodoPagamentoRepository.findOneBy({ idMetodoPagamento });
   }
 
-  create(data: Partial<MetodoPagamento>): Promise<MetodoPagamento> {
-    return this.repo.save(data);
+  create(dto: CreateMetodoPagamentoDto){
+    const metodoPagamento = this.metodoPagamentoRepository.create(dto)
+    return this.metodoPagamentoRepository.save(metodoPagamento);
   }
 
-  update(id: number, data: UpdateMetodoPagamentoDto): Promise<MetodoPagamento> {
-    return this.repo.save({ id, ...data });
+  async update(idMetodoPagamento: number, dto: UpdateMetodoPagamentoDto){
+    const metodoPagamento = await this.metodoPagamentoRepository.findOneBy({ idMetodoPagamento })
+    if(!metodoPagamento) return null
+    this.metodoPagamentoRepository.merge(metodoPagamento, dto)
+    return this.metodoPagamentoRepository.save(metodoPagamento);
   }  
 
-  remove(id: number) {
-    return this.repo.delete(id);
+  async remove(idMetodoPagamento: number) {
+    const metodoPagamento = await this.metodoPagamentoRepository.findOneBy({ idMetodoPagamento })
+    if(!metodoPagamento) return null
+    return this.metodoPagamentoRepository.remove(metodoPagamento);
   }
 }

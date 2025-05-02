@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateVendedorDto {
+export class CreateLojaDto {
   @IsNotEmpty()
   @IsString()
   nome: string;
 
   @IsNotEmpty()
   @IsString()
-  loja: string;
+  cnpj: string;
 }

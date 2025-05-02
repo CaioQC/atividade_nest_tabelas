@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateEnderecoDto {
   @IsNotEmpty()
@@ -16,8 +16,4 @@ export class CreateEnderecoDto {
   @IsNotEmpty()
   @IsString()
   cep: string;
-
-  @IsNotEmpty()
-  @IsNumber()
-  clienteId: number;
 }

@@ -1,30 +1,31 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body, Patch } from '@nestjs/common';
 import { HistoricoVendaService } from './historico-venda.service';
 import { HistoricoVenda } from './entities/historico-venda.entity';
 import { UpdateHistoricoVendaDto } from './dto/update-historico-venda.dto';
+import { CreateHistoricoVendaDto } from './dto/create-historico-venda.dto';
 
 @Controller('historico-venda')
 export class HistoricoVendaController {
   constructor(private readonly service: HistoricoVendaService) {}
 
   @Get()
-  findAll(): Promise<HistoricoVenda[]> {
+  findAll(){
     return this.service.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<HistoricoVenda | null> {
-  return this.service.findOne(id); // Agora a função pode retornar `null`
+  async findOne(@Param('id') id: number){
+  return this.service.findOne(id);
   }
 
   @Post()
-  create(@Body() data: Partial<HistoricoVenda>): Promise<HistoricoVenda> {
-    return this.service.create(data);
+  create(@Body() dto: CreateHistoricoVendaDto){
+    return this.service.create(dto);
   }
 
-  @Put(':id')
-  update(@Param('id') id: number, @Body() data: UpdateHistoricoVendaDto) {
-    return this.service.update(id, data);
+  @Patch(':id')
+  update(@Param('id') id: number, @Body() dto: UpdateHistoricoVendaDto) {
+    return this.service.update(id, dto);
   }
 
   @Delete(':id')

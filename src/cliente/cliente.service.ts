@@ -3,36 +3,38 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 import { Cliente } from './entities/cliente.entity';
+import { CreateClienteDto } from './dto/create-cliente.dto';
 
 @Injectable()
 export class ClienteService {
   constructor(
     @InjectRepository(Cliente)
-    private clienteRepository: Repository<Cliente>,
+    private readonly clienteRepository: Repository<Cliente>,
   ) {}
 
   findAll() {
-    return this.clienteRepository.find({
-      relations: ['enderecos', 'metodosPagamento', 'pedidos'],
-    });
+    return this.clienteRepository.find()
   }
 
-  findOne(id: number) {
-    return this.clienteRepository.findOne({
-      where: { id },
-      relations: ['enderecos', 'metodosPagamento', 'pedidos'],
-    });
+  findOne(idCliente: number) {
+    return this.clienteRepository.findOneBy({ idCliente })
   }
 
-  create(data: Partial<Cliente>) {
-    return this.clienteRepository.save(data);
+  create(dto: CreateClienteDto) {
+    const cliente = this.clienteRepository.create(dto)
+    return this.clienteRepository.save(cliente);
   }
 
-  update(id: number, data: Partial<Cliente>): Promise<Cliente> {
-    return this.clienteRepository.save({ id, ...data });
+  async update(idCliente: number, dto: UpdateClienteDto) {
+    const cliente = await this.clienteRepository.findOneBy({ idCliente })
+    if(!cliente) return null
+    this.clienteRepository.merge(cliente ,dto)
+    return this.clienteRepository.save(cliente);
   }  
 
-  remove(id: number) {
-    return this.clienteRepository.delete(id);
+  async remove(idCliente: number) {
+    const cliente = await this.clienteRepository.findOneBy({ idCliente })
+    if(!cliente) return null
+    return this.clienteRepository.remove(cliente);
   }
 }

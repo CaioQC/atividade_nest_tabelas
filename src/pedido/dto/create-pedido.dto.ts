@@ -1,11 +1,27 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreatePedidoDto {
   @IsNotEmpty()
   @IsNumber()
-  clienteId: number;
+  idCliente: number;
 
   @IsNotEmpty()
-  @IsNumber({}, { each: true })
-  produtosIds: number[];
+  @IsNumber()
+  idCarrinho: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  idEndereco : number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  idMetodoPagamento : number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  idEntregador : number;
+  
+  @IsNotEmpty()
+  @IsString()
+  statusPedido : string;
 }

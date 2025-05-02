@@ -1,10 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Cliente } from 'src/cliente/entities/cliente.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Pedido } from 'src/pedido/entities/pedido.entity';
 
 @Entity()
 export class MetodoPagamento {
   @PrimaryGeneratedColumn()
-  id: number;
+  idMetodoPagamento: number;
 
   @Column()
   tipo: string; // Ex: 'Pix', 'Cartão de Crédito'
@@ -12,6 +12,6 @@ export class MetodoPagamento {
   @Column()
   descricao: string;
 
-  @ManyToOne(() => Cliente, cliente => cliente.metodosPagamento)
-  cliente: Cliente;
+  @OneToMany(() => Pedido, (pedidos) => pedidos.metodoPagamento)
+  pedidos: Pedido[]
 }

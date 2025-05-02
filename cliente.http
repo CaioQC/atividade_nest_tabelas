@@ -2,24 +2,28 @@
 GET http://localhost:3000/clientes
 
 ### get cidade
-GET http://localhost:3000/clientes/1
+GET http://localhost:3000/clientes/3
 
 ### create cidade
 POST http://localhost:3000/clientes
 Content-Type: application/json
 
 { 
-    "nome": "João da Silva",
-    "email": "joao@email.com",
-    "telefone": "11999999999"
+    "nome": "Caio",
+    "email": "caio@gmail.com",
+    "telefone": 999998888,
+    "cpf": "000.000.000-00"
 }
 
 ### update cidade
-PATCH  http://localhost:3000/clientes/1
+PATCH  http://localhost:3000/clientes/3
 Content-Type: application/json
 
 {
-    "nome":"Goiania"
+    "nome":"Pedro",
+    "email" : "pedro@gmail.com",
+    "telefone" : 11999998888
 }
+
 ### delete cidade
 DELETE http://localhost:3000/clientes/1

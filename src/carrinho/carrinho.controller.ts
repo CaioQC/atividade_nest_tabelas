@@ -1,29 +1,30 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body, Patch } from '@nestjs/common';
 import { CarrinhoService } from './carrinho.service';
-import { Carrinho } from './entities/carrinho.entity';
+import { CreateCarrinhoDto } from './dto/create-carrinho.dto';
+import { UpdateCarrinhoDto } from './dto/update-carrinho.dto';
 
 @Controller('carrinho')
 export class CarrinhoController {
   constructor(private readonly service: CarrinhoService) {}
 
   @Get()
-  findAll(): Promise<Carrinho[]> {
+  findAll(){
     return this.service.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Carrinho | null> {
-  return this.service.findOne(id); // Agora a função pode retornar `null`
+  async findOne(@Param('id') id: number){
+  return this.service.findOne(id);
   }
 
   @Post()
-  create(@Body() data: Partial<Carrinho>): Promise<Carrinho> {
-    return this.service.create(data);
+  create(@Body() dto: CreateCarrinhoDto){
+    return this.service.create(dto);
   }
 
-  @Put(':id')
-  update(@Param('id') id: number, @Body() data: Partial<Carrinho>) {
-    return this.service.update(id, data);
+  @Patch(':id')
+  update(@Param('id') id: number, @Body() dto: UpdateCarrinhoDto) {
+    return this.service.update(id, dto);
   }
 
   @Delete(':id')

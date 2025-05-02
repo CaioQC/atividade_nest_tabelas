@@ -1,16 +1,23 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Cliente } from 'src/cliente/entities/cliente.entity';
+import { ItensCarrinho } from 'src/itens_carrinho/entities/itens_carrinho.entity';
+import { Pedido } from 'src/pedido/entities/pedido.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 
 @Entity()
 export class Carrinho {
   @PrimaryGeneratedColumn()
-  id: number;
+  idCarrinho: number;
+
+  @OneToOne(() => Cliente, (cliente) => cliente.carrinho)
+  @JoinColumn({ name : "idCliente" })
+  cliente: Cliente;
 
   @Column()
-  idCliente: number;
+  dataAtualizacao: string;
 
-  @Column()
-  idProduto: number;
+  @OneToMany(() => ItensCarrinho, (itensCarrinho) => itensCarrinho.carrinho)
+  itens : ItensCarrinho[]
 
-  @Column()
-  quantidade: number;
+  @OneToMany(() => Pedido, (pedido) => pedido.carrinho)
+  pedidos : Pedido[]
 }

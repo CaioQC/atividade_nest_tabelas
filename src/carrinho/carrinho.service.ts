@@ -3,31 +3,47 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Carrinho } from './entities/carrinho.entity';
 import { Repository } from 'typeorm';
 import { UpdateCarrinhoDto } from './dto/update-carrinho.dto';
+import { CreateCarrinhoDto } from './dto/create-carrinho.dto';
+import { Cliente } from 'src/cliente/entities/cliente.entity';
 
 @Injectable()
 export class CarrinhoService {
   constructor(
     @InjectRepository(Carrinho)
-    private repo: Repository<Carrinho>,
+    private carrinhoRepository: Repository<Carrinho>,
+    @InjectRepository(Cliente)
+    private clienteRepository: Repository<Cliente>
   ) {}
 
-  findAll(): Promise<Carrinho[]> {
-    return this.repo.find({ relations: ['cliente', 'produto'] });
+  findAll(){
+    return this.carrinhoRepository.find();
   }
 
-  findOne(id: number): Promise<Carrinho | null> {
-    return this.repo.findOne({ where: { id }, relations: ['cliente', 'produto'] });
+  findOne(idCarrinho: number){
+    return this.carrinhoRepository.findOneBy({ idCarrinho });
   }
 
-  create(data: Partial<Carrinho>): Promise<Carrinho> {
-    return this.repo.save(data);
+  async create(dto: CreateCarrinhoDto){
+    const cliente = await this.clienteRepository.findOneBy({ idCliente: dto.idCliente })
+    if(!cliente) return null
+    
+    const carrinho = this.carrinhoRepository.create({
+      ...dto,
+      cliente
+    })
+    return this.carrinhoRepository.save(carrinho);
   }
 
-  update(id: number, data: UpdateCarrinhoDto): Promise<Carrinho> {
-    return this.repo.save({ id, ...data });
+  async update(idCarrinho: number, dto: UpdateCarrinhoDto){
+    const carrinho = await this.carrinhoRepository.findOneBy({ idCarrinho })
+    if(!carrinho) return null
+    this.carrinhoRepository.merge(carrinho, dto)
+    return this.carrinhoRepository.save(carrinho)
   }  
 
-  remove(id: number) {
-    return this.repo.delete(id);
+  async remove(idCarrinho: number) {
+    const carrinho = await this.carrinhoRepository.findOneBy({ idCarrinho })
+    if(!carrinho) return null
+    return this.carrinhoRepository.remove(carrinho)
   }
 }

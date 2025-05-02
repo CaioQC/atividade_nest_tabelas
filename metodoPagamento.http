@@ -1,0 +1,26 @@
+### list metodos-pagamento
+GET http://localhost:3000/metodos-pagamento
+
+### get metodos-pagamento
+GET http://localhost:3000/metodos-pagamento/2
+
+### create metodos-pagamento
+POST http://localhost:3000/metodos-pagamento
+Content-Type: application/json
+
+{ 
+    "tipo": "pix",
+    "descricao": "Paga no pix" 
+}
+
+### update metodos-pagamento
+PATCH  http://localhost:3000/metodos-pagamento/2
+Content-Type: application/json
+
+{ 
+    "tipo": "debito",
+    "descricao": "Paga no debito" 
+}
+
+### delete metodos-pagamento
+DELETE http://localhost:3000/metodos-pagamento/1

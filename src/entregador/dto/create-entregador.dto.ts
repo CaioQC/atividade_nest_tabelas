@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateEntregadorDto {
   @IsNotEmpty()
@@ -7,5 +7,13 @@ export class CreateEntregadorDto {
 
   @IsNotEmpty()
   @IsString()
-  veiculo: string;
+  cpf: string
+
+  @IsNotEmpty()
+  @IsNumber()
+  telefone: number
+
+  @IsNotEmpty()
+  @IsEmail()
+  email: string
 }

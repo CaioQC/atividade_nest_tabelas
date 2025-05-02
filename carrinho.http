@@ -1,0 +1,25 @@
+### list carrinho
+GET http://localhost:3000/carrinho
+
+### get carrinho
+GET http://localhost:3000/carrinho/2
+
+### create carrinho
+POST http://localhost:3000/carrinho
+Content-Type: application/json
+
+{ 
+    "dataAtualizacao": "2025-10-02",
+    "idCliente": 2
+}
+
+### update carrinho
+PATCH  http://localhost:3000/carrinho/3
+Content-Type: application/json
+
+{ 
+    "dataAtualizacao": "2025-04-02"
+}
+
+### delete carrinho
+DELETE http://localhost:3000/carrinho/3

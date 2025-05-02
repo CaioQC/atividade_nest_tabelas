@@ -1,6 +1,8 @@
-import { Controller, Get, Post, Param, Put, Delete, Body } from '@nestjs/common';
+import { Controller, Get, Post, Param, Delete, Body, Patch } from '@nestjs/common';
 import { ClienteService } from './cliente.service';
 import { Cliente } from './entities/cliente.entity';
+import { CreateClienteDto } from './dto/create-cliente.dto';
+import { UpdateClienteDto } from './dto/update-cliente.dto';
 
 @Controller('clientes')
 export class ClienteController {
@@ -12,18 +14,18 @@ export class ClienteController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Cliente | null> {
-  return this.clienteService.findOne(id); // Agora a função pode retornar `null`
+  async findOne(@Param('id') id: number){
+  return this.clienteService.findOne(id);
   }
 
   @Post()
-  create(@Body() data: Partial<Cliente>) {
-    return this.clienteService.create(data);
+  create(@Body() dto: CreateClienteDto) {
+    return this.clienteService.create(dto);
   }
 
-  @Put(':id')
-  update(@Param('id') id: number, @Body() data: Partial<Cliente>) {
-    return this.clienteService.update(id, data);
+  @Patch(':id')
+  update(@Param('id') id: number, @Body() dto: UpdateClienteDto) {
+    return this.clienteService.update(id, dto);
   }
 
   @Delete(':id')

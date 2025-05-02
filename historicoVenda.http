@@ -1,0 +1,25 @@
+### list historico-venda
+GET http://localhost:3000/historico-venda
+
+### get historico-venda
+GET http://localhost:3000/historico-venda/1
+
+### create historico-venda
+POST http://localhost:3000/historico-venda
+Content-Type: application/json
+
+{
+    "idLoja": 2,
+    "dataVenda": "2014-08-09"
+}
+
+### update historico-venda
+PATCH  http://localhost:3000/historico-venda/1
+Content-Type: application/json
+
+{
+    "dataVenda": "1994-12-10"
+}
+
+### delete historico-venda
+DELETE http://localhost:3000/historico-venda/1

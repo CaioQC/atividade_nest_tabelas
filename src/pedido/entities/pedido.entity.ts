@@ -1,21 +1,30 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Cliente } from 'src/cliente/entities/cliente.entity';
-import { Produto } from 'src/produto/entities/produto.entity';
+import { Carrinho } from 'src/carrinho/entities/carrinho.entity';
+import { Endereco } from 'src/endereco/entities/endereco.entity';
+import { MetodoPagamento } from 'src/metodo-pagamento/entities/metodo-pagamento.entity';
+import { Entregador } from 'src/entregador/entities/entregador.entity';
 
 @Entity()
 export class Pedido {
   @PrimaryGeneratedColumn()
-  id: number;
+  idPedido: number;
 
-  @ManyToOne(() => Cliente, cliente => cliente.pedidos)
-  cliente: Cliente;
+  @ManyToOne(() => Cliente, (cliente) => cliente.pedidos)
+  cliente: Cliente
 
-  @ManyToOne(() => Produto, produto => produto.pedidos)
-  produto: Produto;
+  @ManyToOne(() => Carrinho, (carrinho) => carrinho.pedidos)
+  carrinho : Carrinho
+
+  @ManyToOne(() => Endereco, (endereco) => endereco.pedidos)
+  endereco : Endereco
+
+  @ManyToOne(() => MetodoPagamento, (metodoPagamento) => metodoPagamento.pedidos)
+  metodoPagamento: MetodoPagamento
+
+  @ManyToOne(() => Entregador, (entregador) => entregador.pedidos)
+  entregador: Entregador
 
   @Column()
-  quantidade: number;
-
-  @Column('decimal')
-  valorTotal: number;
+  statusPedido : string
 }

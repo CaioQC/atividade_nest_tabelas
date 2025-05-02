@@ -1,16 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, JoinColumn, OneToOne, Column } from 'typeorm';
 import { Pedido } from 'src/pedido/entities/pedido.entity';
+import { Entregador } from 'src/entregador/entities/entregador.entity';
 
 @Entity()
 export class HistoricoEntrega {
   @PrimaryGeneratedColumn()
-  id: number;
+  idHistoricoEntrega: number;
 
-  @ManyToOne(() => Pedido)
-  pedido: Pedido;
-
-  @Column()
-  status: string;
+  @OneToOne(() => Entregador, (entregador) => entregador.historicoEntrega)
+  @JoinColumn()
+  entregador: Entregador
 
   @Column()
   dataEntrega: Date;

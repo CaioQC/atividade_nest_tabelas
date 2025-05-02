@@ -1,15 +1,13 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDate, IsDateString, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateCarrinhoDto {
+  // @Type(() => Number)
   @IsNotEmpty()
   @IsNumber()
-  clienteId: number;
+  idCliente: number;
 
   @IsNotEmpty()
-  @IsNumber()
-  produtoId: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  quantidade: number;
+  @IsDateString()
+  dataAtualizacao : string
 }

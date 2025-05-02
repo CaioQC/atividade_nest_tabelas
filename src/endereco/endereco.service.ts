@@ -3,31 +3,38 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Endereco } from './entities/endereco.entity';
 import { Repository } from 'typeorm';
 import { UpdateEnderecoDto } from './dto/update-endereco.dto';
+import { CreateEnderecoDto } from './dto/create-endereco.dto';
 
 @Injectable()
 export class EnderecoService {
   constructor(
     @InjectRepository(Endereco)
-    private repo: Repository<Endereco>,
+    private enderecoRepository: Repository<Endereco>,
   ) {}
 
-  findAll(): Promise<Endereco[]> {
-    return this.repo.find({ relations: ['cliente'] });
+  findAll(){
+    return this.enderecoRepository.find();
   }
 
-  findOne(id: number): Promise<Endereco | null> {
-    return this.repo.findOne({ where: { id }, relations: ['cliente'] });
+  findOne(idEndereco: number){
+    return this.enderecoRepository.findOneBy({ idEndereco });
   }
 
-  create(data: Partial<Endereco>): Promise<Endereco> {
-    return this.repo.save(data);
+  create(dto: CreateEnderecoDto){
+    const endereco = this.enderecoRepository.create(dto)
+    return this.enderecoRepository.save(endereco);
   }
 
-  update(id: number, data: UpdateEnderecoDto): Promise<Endereco> {
-    return this.repo.save({ id, ...data });
+  async update(idEndereco: number, dto: UpdateEnderecoDto){
+    const endereco = await this.enderecoRepository.findOneBy({ idEndereco })
+    if(!endereco) return null
+    this.enderecoRepository.merge(endereco, dto)
+    return this.enderecoRepository.save(endereco);
   }  
 
-  remove(id: number) {
-    return this.repo.delete(id);
+  async remove(idEndereco: number) {
+    const endereco = await this.enderecoRepository.findOneBy({ idEndereco })
+    if(!endereco) return null
+    return this.enderecoRepository.remove(endereco);
   }
 }

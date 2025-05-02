@@ -1,0 +1,25 @@
+### list historico-entrega
+GET http://localhost:3000/historico-entrega
+
+### get historico-entrega
+GET http://localhost:3000/historico-entrega/1
+
+### create historico-entrega
+POST http://localhost:3000/historico-entrega
+Content-Type: application/json
+
+{
+    "idEntregador": 1,
+    "dataEntrega": "2014-08-09"
+}
+
+### update historico-entrega
+PATCH  http://localhost:3000/historico-entrega/1
+Content-Type: application/json
+
+{
+    "dataEntrega": "1994-12-10"
+}
+
+### delete historico-entrega
+DELETE http://localhost:3000/historico-entrega/1

@@ -1,0 +1,28 @@
+### list entregadores
+GET http://localhost:3000/entregadores
+
+### get entregadores
+GET http://localhost:3000/entregadores/2
+
+### create entregadores
+POST http://localhost:3000/entregadores
+Content-Type: application/json
+
+{ 
+    "nome": "Cleber",
+    "email": "cleber@gmail.com",
+    "telefone": 999998888,
+    "cpf": "000.000.000-00"
+}
+
+### update entregadores
+PATCH  http://localhost:3000/entregadores/3
+Content-Type: application/json
+
+{ 
+    "nome": "Antonio",
+    "email": "antonio@gmail.com"
+}
+
+### delete entregadores
+DELETE http://localhost:3000/entregadores/2

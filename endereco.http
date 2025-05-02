@@ -1,0 +1,28 @@
+### list enderecos
+GET http://localhost:3000/enderecos
+
+### get enderecos
+GET http://localhost:3000/enderecos/2
+
+### create enderecos
+POST http://localhost:3000/enderecos
+Content-Type: application/json
+
+{ 
+    "rua": "avenida qualquer coisa",
+    "cidade": "Arniqueira",
+    "estado": "DF",
+    "cep": "00000-000"
+}
+
+### update enderecos
+PATCH  http://localhost:3000/enderecos/2
+Content-Type: application/json
+
+{ 
+    "rua": "avenida não sei daonde",
+    "cidade": "Taguatinga"
+}
+
+### delete enderecos
+DELETE http://localhost:3000/enderecos/2

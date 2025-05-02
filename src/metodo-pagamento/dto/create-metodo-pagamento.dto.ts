@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateMetodoPagamentoDto {
   @IsNotEmpty()
@@ -6,6 +6,6 @@ export class CreateMetodoPagamentoDto {
   tipo: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  clienteId: number;
+  @IsString()
+  descricao: string
 }

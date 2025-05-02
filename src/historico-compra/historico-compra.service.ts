@@ -3,31 +3,46 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { HistoricoCompra } from './entities/historico-compra.entity';
 import { Repository } from 'typeorm';
 import { UpdateHistoricoCompraDto } from './dto/update-historico-compra.dto';
+import { Cliente } from 'src/cliente/entities/cliente.entity';
+import { CreateHistoricoCompraDto } from './dto/create-historico-compra.dto';
 
 @Injectable()
 export class HistoricoCompraService {
   constructor(
     @InjectRepository(HistoricoCompra)
-    private repo: Repository<HistoricoCompra>,
+    private historicoCompraRepository: Repository<HistoricoCompra>,
+    @InjectRepository(Cliente)
+    private clienteRepository: Repository<Cliente>
   ) {}
 
-  findAll(): Promise<HistoricoCompra[]> {
-    return this.repo.find({ relations: ['pedido', 'metodoPagamento'] });
+  findAll(){
+    return this.historicoCompraRepository.find();
   }
 
-  findOne(id: number): Promise<HistoricoCompra | null> {
-    return this.repo.findOne({ where: { id }, relations: ['pedido', 'metodoPagamento'] });
+  findOne(idHistoricoCompra: number){
+    return this.historicoCompraRepository.findOneBy({ idHistoricoCompra });
   }
 
-  create(data: Partial<HistoricoCompra>): Promise<HistoricoCompra> {
-    return this.repo.save(data);
+  async create(dto: CreateHistoricoCompraDto){
+    const cliente = await this.clienteRepository.findOneBy({ idCliente: dto.idCliente })
+    if(!cliente) return null
+    const historicoCompra = this.historicoCompraRepository.create({
+      ...dto,
+      cliente
+    })
+    return this.historicoCompraRepository.save(historicoCompra);
   }
 
-  update(id: number, data: UpdateHistoricoCompraDto): Promise<HistoricoCompra> {
-    return this.repo.save({ id, ...data });
+  async update(idHistoricoCompra: number, dto: UpdateHistoricoCompraDto){
+    const historicoCompra = await this.historicoCompraRepository.findOneBy({ idHistoricoCompra })
+    if(!historicoCompra) return null
+    this.historicoCompraRepository.merge(historicoCompra, dto)
+    return this.historicoCompraRepository.save(historicoCompra)
   }  
 
-  remove(id: number) {
-    return this.repo.delete(id);
+  async remove(idHistoricoCompra: number) {
+    const historicoCompra = await this.historicoCompraRepository.findOneBy({ idHistoricoCompra })
+    if(!historicoCompra) return null
+    return this.historicoCompraRepository.remove(historicoCompra)
   }
 }

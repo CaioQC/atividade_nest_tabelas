@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Entregador } from './entities/entregador.entity';
 import { Repository } from 'typeorm';
 import { UpdateEntregadorDto } from './dto/update-entregador.dto';
+import { CreateEntregadorDto } from './dto/create-entregador.dto';
 
 @Injectable()
 export class EntregadorService {
@@ -12,27 +13,28 @@ export class EntregadorService {
   ) {}
 
   findAll() {
-    return this.entregadorRepository.find({
-      relations: ['historicosEntrega'],
-    });
+    return this.entregadorRepository.find()
   }
 
-  findOne(id: number) {
-    return this.entregadorRepository.findOne({
-      where: { id },
-      relations: ['historicosEntrega'],
-    });
+  findOne(idEntregador: number) {
+    return this.entregadorRepository.findOneBy({ idEntregador })
   }
 
-  create(data: Partial<Entregador>) {
-    return this.entregadorRepository.save(data);
+  create(dto: CreateEntregadorDto) {
+    const entregador = this.entregadorRepository.create(dto)
+    return this.entregadorRepository.save(entregador);
   }
 
-  update(id: number, data: UpdateEntregadorDto): Promise<Entregador> {
-    return this.entregadorRepository.save({ id, ...data });
+  async update(idEntregador: number, dto: UpdateEntregadorDto){
+    const entregador = await this.entregadorRepository.findOneBy({ idEntregador })
+    if(!entregador) return null
+    this.entregadorRepository.merge(entregador, dto)
+    return this.entregadorRepository.save(entregador)
   }  
 
-  remove(id: number) {
-    return this.entregadorRepository.delete(id);
+  async remove(idEntregador: number) {
+    const entregador = await this.entregadorRepository.findOneBy({ idEntregador })
+    if(!entregador) return null
+    return this.entregadorRepository.remove(entregador)
   }
 }

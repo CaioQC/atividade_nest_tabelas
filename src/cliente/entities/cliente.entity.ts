@@ -1,12 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Endereco } from 'src/endereco/entities/endereco.entity';
-import { MetodoPagamento } from 'src/metodo-pagamento/entities/metodo-pagamento.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from 'typeorm';
 import { Pedido } from 'src/pedido/entities/pedido.entity';
+import { Carrinho } from 'src/carrinho/entities/carrinho.entity';
+import { HistoricoCompra } from 'src/historico-compra/entities/historico-compra.entity';
 
 @Entity()
 export class Cliente {
   @PrimaryGeneratedColumn()
-  id: number;
+  idCliente: number;
 
   @Column()
   nome: string;
@@ -15,14 +15,17 @@ export class Cliente {
   email: string;
 
   @Column()
-  telefone: string;
+  telefone: number;
 
-  @OneToMany(() => Endereco, endereco => endereco.cliente)
-  enderecos: Endereco[];
+  @Column()
+  cpf : string;
 
-  @OneToMany(() => MetodoPagamento, metodo => metodo.cliente)
-  metodosPagamento: MetodoPagamento[];
+  @OneToOne(() => Carrinho, (carrinho) => carrinho.cliente)
+  carrinho : Carrinho
 
-  @OneToMany(() => Pedido, pedido => pedido.cliente)
-  pedidos: Pedido[];
+  @OneToMany(() => Pedido, (pedido) => pedido.cliente)
+  pedidos : Pedido[]
+
+  @OneToOne(() => HistoricoCompra, (historicoCompra) => historicoCompra.cliente)
+  historicoCompra : HistoricoCompra
 }
